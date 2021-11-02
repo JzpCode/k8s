@@ -1,0 +1,19 @@
+box: golang
+build:
+  steps:
+    - script:
+        name: go build
+        code: |
+          go build -o k8s main.go
+    - script:
+        name: copy files to wercker output
+        code: |
+          cp -R ./ ${WERCKER_OUTPUT_DIR}
+deploy:
+  steps:
+    - internal/docker-push:
+        username: $USERNAME
+        password: $PASSWORD
+        cmd: /data/k8s
+        tag: latest
+        repository: jzp1083462154/k8s

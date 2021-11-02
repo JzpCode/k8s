@@ -9,12 +9,12 @@ build:
         name: copy files to wercker output
         code: |
           if [ ! -d ${WERCKER_OUTPUT_DIR} ];then mkdir -p ${WERCKER_OUTPUT_DIR};fi
-          cp -R ./ ${WERCKER_OUTPUT_DIR}
+          cp -R ./k8s ${WERCKER_OUTPUT_DIR}/
 deploy:
   steps:
     - internal/docker-push:
         username: $USERNAME
         password: $PASSWORD
-        cmd: /data/k8s
+        cmd: ${WERCKER_OUTPUT_DIR}/k8s
         tag: latest
         repository: jzp1083462154/k8s
